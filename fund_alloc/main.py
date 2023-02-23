@@ -1,4 +1,5 @@
 import multiprocessing
+import os.path
 from dataclasses import field
 from functools import partial
 from typing import List
@@ -164,7 +165,7 @@ def main():
 
     # compute for N trials
     with multiprocessing.Pool(processes=args.num_workers) as pool:
-        noisy_allocs = list((pool.imap(f, tqdm(range(args.num_trials), total=args.num_trials))))
+        noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
 
     # take the average of the noisy allocations and update the dataframe
     noisy_basic_alloc, noisy_concentration_alloc, noisy_target_alloc = list(zip(*noisy_allocs))
@@ -181,6 +182,8 @@ def main():
     df['calculated_concentrated_alloc'] = concentration_official_alloc
     df['calculated_targeted_alloc'] = targeted_official_alloc
 
+    if not os.path.exists('out/'):
+        os.makedirs('out/', exist_ok=True)
     df.to_csv(f'out/df_noisy_out_census_dp_rho={args.global_rho}.csv')
 
 
