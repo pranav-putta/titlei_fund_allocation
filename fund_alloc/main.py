@@ -17,8 +17,9 @@ from mltoolkit import argclass, parse_args
 class Arguments:
     num_trials: int = field(default=1000)
     global_rho: float = field(default=0.1)
-    weights: list = field(default=([0.085, 0.274, 0.02]))
+    weights: list = field(default_factory=lambda: ([0.085, 0.274, 0.02].copy()))
     use_constraints: bool = field(default=True)
+    num_workers: int = field(default=4)
 
 
 def compute_basic_alloc(formula_pop, total_pop, adj_sppe_, total_funds):
@@ -161,7 +162,7 @@ def main():
                 official_state_formula_population, official_national_population)
 
     # compute for N trials
-    with multiprocessing.Pool(processes=4) as pool:
+    with multiprocessing.Pool(processes=args.num_workers) as pool:
         noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
 
     # take the average of the noisy allocations and update the dataframe
