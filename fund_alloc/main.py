@@ -1,4 +1,5 @@
 import multiprocessing
+from dataclasses import field
 from functools import partial
 
 import numpy as np
@@ -8,6 +9,16 @@ from tqdm import tqdm
 from constraint_opt import solve_hierarchical_counts
 from data_util import get_inputs, get_sppe, compute_adj_sppe
 from util_fns import dgaussian_fn
+
+from mltoolkit import argclass, parse_args
+
+
+@argclass
+class Arguments:
+    num_trials: int = field(default=1000)
+    global_rho: float = field(default=0.1)
+    weights: list = field(default=([0.085, 0.274, 0.02]))
+    use_constraints: bool = field(default=True)
 
 
 def compute_basic_alloc(formula_pop, total_pop, adj_sppe_, total_funds):
@@ -102,10 +113,7 @@ def compute_noisy_alloc(df, epsilons, use_constraints, adj_sppe_, total_availabl
 
 def main():
     # configuration
-    num_trials = 1000
-    global_rho = 0.1
-    weights = np.array([0.085, 0.274, 0.02])
-    use_constraints = True
+    args: Arguments = parse_args(Arguments)
 
     # load in school district data and state expenditure data
     df = get_inputs(2021, use_official_children=True)
@@ -138,7 +146,7 @@ def main():
                                                      targeted_total_available_funds)
 
     # compute dp versions
-    rhos = global_rho * weights
+    rhos = args.global_rho * np.array(args.weights)
     epsilons = rhos + 2 * np.sqrt(-rhos * np.log(10 ** -10))
 
     print(f'epsilons (county, state, national): {epsilons}')
@@ -149,18 +157,19 @@ def main():
         concentration_total_available_funds,
         targeted_total_available_funds
     )
-    f = partial(compute_noisy_alloc, df, epsilons, use_constraints, adj_sppe_, total_available_funds,
+    f = partial(compute_noisy_alloc, df, epsilons, args.use_constraints, adj_sppe_, total_available_funds,
                 official_state_formula_population, official_national_population)
 
     # compute for N trials
     with multiprocessing.Pool(processes=4) as pool:
-        noisy_allocs = list(tqdm(pool.imap(f, range(num_trials)), total=num_trials))
+        noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
 
     # take the average of the noisy allocations and update the dataframe
     noisy_basic_alloc, noisy_concentration_alloc, noisy_target_alloc = list(zip(*noisy_allocs))
-    avg_noisy_basic_alloc = pd.Series.sum(pd.concat(noisy_basic_alloc, axis=1), axis=1) / num_trials
-    avg_noisy_concentration_alloc = pd.Series.sum(pd.concat(noisy_concentration_alloc, axis=1), axis=1) / num_trials
-    avg_noisy_target_alloc = pd.Series.sum(pd.concat(noisy_target_alloc, axis=1), axis=1) / num_trials
+    avg_noisy_basic_alloc = pd.Series.sum(pd.concat(noisy_basic_alloc, axis=1), axis=1) / args.num_trials
+    avg_noisy_concentration_alloc = pd.Series.sum(pd.concat(noisy_concentration_alloc, axis=1),
+                                                  axis=1) / args.num_trials
+    avg_noisy_target_alloc = pd.Series.sum(pd.concat(noisy_target_alloc, axis=1), axis=1) / args.num_trials
 
     df['avg_noisy_basic_alloc'] = avg_noisy_basic_alloc
     df['avg_noisy_concentration_alloc'] = avg_noisy_concentration_alloc
@@ -170,7 +179,7 @@ def main():
     df['calculated_concentrated_alloc'] = concentration_official_alloc
     df['calculated_targeted_alloc'] = targeted_official_alloc
 
-    df.to_csv(f'out/df_noisy_out_census_dp_rho={global_rho}.csv')
+    df.to_csv(f'out/df_noisy_out_census_dp_rho={args.global_rho}.csv')
 
 
 if __name__ == '__main__':
