@@ -1,0 +1,291 @@
+\usepackage{scalerel}
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{txfonts}
+
+\usepackage{fontawesome}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{corollary}{Corollary}
+\newtheorem{problem*}{Problem}
+\newtheorem{property}{Property}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{claim}{Claim}
+\newtheorem{example}{Example}
+\newtheorem*{example*}{Example}
+
+\usepackage[ruled,linesnumbered,noresetcount,vlined]{algorithm2e}
+\makeatletter
+\newcommand{\nlsetend}[1]{%
+\SetKwIF{nlIf}{ElseIf}{Else}{if}{then}{else if}{else}{\nlset{#1}end}
+}
+\newcommand{\nosemic}{\renewcommand{\@endalgocfline}{\relax}}% Drop semi-colon ;
+\newcommand{\dosemic}{\renewcommand{\@endalgocfline}{\algocf@endline}}% Reinstate semi-colon ;
+\newcommand{\pushline}{\Indp}% Indent
+\newcommand{\popline}{\Indm\dosemic}% Undent
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
+\renewcommand\AlCapNameSty{\slshape}
+\SetKwFor{Repeat}{repeat}{:}{endw}
+\makeatother
+\usepackage{todonotes}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{multirow}
+\usepackage{bm,bbm}
+\usepackage{paralist}
+\usepackage{enumitem}
+
+\newcommand{\Lap}{\textrm{Lap}}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\minimize}{minimize}
+\newcommand*{\prob}{\mathsf{P}}
+
+%%% Comments
+\newcommand{\nandoSide}[1]{\todo[caption={},color=cyan!20!]{
+\begin{spacing}{0.6}
+\vspace{-2pt}
+{\tiny FF: #1}
+\vspace{-8pt}
+\end{spacing}}}
+\newcommand{\pascalSide}[1]{\todo[caption={},color=green!20!]{
+\begin{spacing}{0.6}
+\vspace{-2pt}
+{\tiny PVH: #1}
+\vspace{-8pt}
+\end{spacing}}}
+\newcommand{\cuongSide}[1]{\todo[caption={},color=red!20!]{
+\begin{spacing}{0.6}
+\vspace{-2pt}
+{\tiny CT: #1}
+\vspace{-8pt}
+\end{spacing}}}
+\newcommand{\nando}[1]{\todo[inline,caption={},color=cyan!20!]{
+\begin{spacing}{0.6}
+\vspace{-2pt}
+{\footnotesize FF: #1}
+\vspace{-8pt}
+\end{spacing}}}
+\newcommand{\cuong}[1]{\textbf{CT}:{\color{red}{#1}}}
+
+
+\definecolor{darkgreen}{RGB}{204,102,0}
+
+\newcommand{\rev}[1]{{\color{purple}{#1}}}
+\newcommand{\add}[1]{{\color{darkgreen}{#1}}}
+\newcommand*{\defeq}{\stackrel{\text{def}}{=}}
+\def\aux{\mathrm{aux}}
+
+% Math-cal
+\newcommand{\cA}{\mathcal{A}} \newcommand{\cB}{\mathcal{B}} 
+\newcommand{\cC}{\mathcal{C}} \newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}} \newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}} \newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}} \newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}} \newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}} \newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}} \newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}} \newcommand{\cV}{\mathcal{V}}
+\newcommand{\cZ}{\mathcal{Z}} \newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}} \newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cW}{\mathcal{W}} \newcommand{\cX}{\mathcal{X}}
+
+\newcommand{\EE}{\mathbb{E}} \newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}} \newcommand{\ZZ}{{\mathbb{Z}}}
+\newcommand{\CC}{{\mathbb{C}}}
+
+%%% helpers
+\newcommand{\MLap}{\mathcal{M}_{\mathrm{Lap}}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\newcommand{\minimize}[1]{\underset{{#1}}{\text{minimize}}}
+\newcommand{\maximize}[1]{\underset{{#1}}{\text{maximize}}}
+% \newcommand{\st}{\text{subject to}}
+\newcommand{\setcard}[1]{\scalebox{0.5}{$|#1|$}}
+% \usepackage{mathtools}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\usepackage{esvect}\newcommand{\cev}[1]{\reflectbox{\ensuremath{\vec{\reflectbox{\ensuremath{#1}}}}}}
+\DeclareMathOperator{\Tr}{Tr}
+\newcommand{\se}[1]{\text{s}(#1)}
+\newcommand{\re}[1]{\text{r}(#1)}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\newcommand{\smallk}{\scalebox{0.65}{$k$}}
+\newcommand{\userset}{\cP}
+\newcommand{\unitset}{\cU}
+\newcommand{\regionset}{\cR}
+\newcommand{\unitsizeset}{\cZ}
+\newcommand{\sizeset}{\cS}
+\newcommand{\user}{p}
+% \newcommand{\unit}{u}
+% \newcommand{\region}{r}
+\newcommand{\unitsize}{z}
+\newcommand{\size}{\sigma}
+\newcommand{\group}{G}
+\newcommand{\gsize}{n}
+\newcommand{\gsizevec}{\bm{n}}
+\newcommand{\csize}{c}
+\newcommand{\csizevec}{\bm{c}}
+
+\newcommand{\node}{a}
+\newcommand{\US}{\textsl{US}}
+\newcommand{\GA}{\textsl{GA}}
+\newcommand{\MI}{\textsl{MI}}
+\newcommand{\ctable}{\bm{\tau}}
+\newcommand{\cfunction}{\mathring{\ctable}}
+\newcommand{\ctablech}{\bm{\phi}}
+\newcommand{\cfunctionch}{\mathring{\ctablech}}
+
+\newcommand{\dom}{D}
+\newcommand{\tree}{\cT}
+\newcommand{\treedp}{\cT^{\textsl{dp}}}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\nint}\lfloor\rceil
+
+%%% KEYU NOTATIONS 
+
+\newcommand{\bB}{\mathbf{B}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bG}{\mathbf{G}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\bT}{\mathbf{T}}
+\newcommand{\bX}{\setf{X}}
+\newcommand{\bY}{\setf{Y}}
+\newcommand{\bv}{\setf{v}}
+\newcommand{\bj}{\setf{j}}
+\newcommand{\bn}{\setf{n}}
+
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bg}{\mathbf{g}}
+
+\newcommand{\bs}{\bm{\sigma}}
+\newcommand{\bS}{\bm{\Sigma}}
+
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bw}{\setf{w}}
+\newcommand{\bz}{\setf{z}}
+\newcommand{\xl}{\mathbf{x}_{\ell}}
+\newcommand{\xg}{\mathbf{x}_{g}}
+
+
+% Math-scr
+\newcommand{\sU}{{\mathscr{U}}}	% a subset of  therange of the databases
+\newcommand{\sF}{{\mathscr{F}}} % collections of features
+\newcommand{\sR}{{\mathscr{R}}}
+
+
+\newcommand{\M}{{\mathcal{M}}}
+\newcommand{\x}{D_1}
+\newcommand{\y}{D_2}
+\newcommand{\private}[1]{\tilde{#1}}
+\newcommand{\data}{D}
+\newcommand{\D}{{\mathscr{D}}}	% the set of all databases
+\newcommand{\sD}{{\mathscr{D}}}	% the set of all databases
+\newcommand{\R}{{\mathscr{R}}}	% the range of all databases
+\newcommand{\s}{{\mathcal{S}}}	% a subset of the range of the 
+\newcommand{\sO}{{\mathscr{O}}}	% the set of all databases
+
+
+\newcommand{\X}{{\mathcal{X}}}
+\newcommand{\Mode}{\setf{M}}
+\newcommand{\sd}{\setf{d}}
+\newcommand{\MLap}{\mathcal{M}_{\mathrm{Lap}}}
+\newcommand{\FQ}{FQ}
+
+
+\newcommand{\Lap}{{\text{Lap}}}
+\newcommand{\q}[1]{c_{#1}}
+\newcommand{\nq}[1]{\tilde{c}_{#1}}
+\newcommand{\h}[1]{h_{#1}}
+\newcommand{\nh}[1]{\tilde{h}_{#1}}
+\newcommand{\projod}[1]{\data_{|\setf{L}\!=\!{#1}}}
+\newcommand{\isin}{\!\in\!}
+\newcommand{\isto}{\!\to\!}
+\newcommand{\isst}{\!:\!}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\newcommand{\triplet}{triplet\xspace}
+\newcommand{\triplets}{triplets\xspace}
+\newcommand{\featurespec}{feature specification\xspace}
+\newcommand{\OBM}{CBDP\xspace}
+\newcommand{\MO}{\M_{O}\xspace}
+\newcommand{\MOi}[1]{\M_{O#1}}
+\newcommand{\nth}[1]{$#1^\text{th}$}
+\def \algname{\textsc{OptStream}}
+
+\newcommand*{\skipnumber}[2][1]{%
+   {\renewcommand*{\alglinenumber}[1]{}\State #2}%
+   \addtocounter{ALG@line}{-#1}}
+\def \iff{\;\Leftrightarrow\;}
+
+%--------------------------------------------------------------------
+%	ENVIRONMENTS: ITEMIZE 
+%--------------------------------------------------------------------
+\newcommand{\benumerate}{\begin{list}{$\bullet$}{\topsep=0pt \parsep=0pt \itemsep=1pt \labelwidth=1.5em \labelsep=0.5em \leftmargin=20pt}}
+\newcommand{\eenumerate}{\end{list}}
+\newcommand{\bitemize}{\begin{list}{$\bullet$}{\topsep=0pt \parsep=0pt \itemsep=0pt \leftmargin=10pt}}
+\newcommand{\eitemize}{\end{list}}
+
+\newcommand{\iOne}{\textit{(i)}\xspace}
+\newcommand{\iTwo}{\textit{(ii)}\xspace}
+\newcommand{\iThree}{\textit{(iii)}\xspace}
+\newcommand{\iFour}{\textit{(iv)}\xspace}
+\newcommand{\iFive}{\textit{(v)}\xspace}
+
+%--------------------------------------------------------------------
+%	ENVIRONMENTS: Comments
+%--------------------------------------------------------------------
+\newcommand{\nandoSide}[1]{\todo[caption={},color=blue!20!]{{\footnotesize Nando: #1}}}
+\newcommand{\nando}[1]{\todo[inline,caption={},color=blue!20!]{Nando: #1}}
+
+\newcommand{\pascalSide}[1]{\todo[caption={},color=red!20!]{{\footnotesize Pascal: #1}}}
+\newcommand{\pascal}[1]{\todo[inline,caption={},color=red!20!]{Pascal: #1}}
+
+
+%	ENVIRONMENTS: FLOATS: tables and figures 
+\def\emptycell{\multicolumn{1}{c}{}}
+%	COMMANDS: MATH
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\andl}{\hspace{3pt} \land \hspace{3pt}}
+\newcommand{\bigO}[1]{$O\big(#1\big)$}
+\newcommand{\bigo}[1]{\small{O\big(#1\big)}}
+\def\is{\!=\!}
+\def\st{\: | \:}
+\def\oof{\:\mathbf{of} \:\:}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\minimize}{\operatornamewithlimits{minimize}}
+\newcommand{\argminmax}{\operatornamewithlimits{arg \min\!/\!\max}}
+\newcommand{\argprec}{\operatornamewithlimits{arg\!\prec}}
+%\DeclareMathOperator*{\bigtimes}{\vartimes}
+\newcommand{\scope}[1]{\setf{x}^{#1}}
+% COMMANDS: FONTS
+\newcommand{\listf}[1]{{\mathcal{#1}}}
+\newcommand{\setf}[1]{{\bf{#1}}}
+\newcommand{\res}[1]{\bm{\Delta}\left(#1\right)}
+\newcommand{\varf}[1]{{\it{#1}}}
+\newcommand{\parsection}[1]{\vspace{8pt}\noindent\textbf{\textit{\underline{#1}}}.\hspace{8pt}\noindent}
+\newcommand{\algref}[2]{\medskip\noindent\textbf{#1} \cite{#2}.\hspace{4pt}}
+\newcommand{\domainref}[1]{\medskip\noindent\textbf{#1}.\hspace{4pt}}
+\newcommand{\highlight}[1]{\underline{\textit{#1}}}
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\nint}\lfloor\rceil
