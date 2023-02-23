@@ -47,7 +47,7 @@ def targeted_grant_weight(eligible, total):
         (0.3016, 0.3824): 3.25,
         (0.3824, float('inf')): 4.0
     }.items():
-        wec_props += (prop >= r[0]) * (np.minimum(r[1], prop) - r[0] + 1) * w
+        wec_props += (prop >= r[0]) * (np.minimum(r[1], prop) - r[0]) * w * total
 
     # take the higher weighted eligibility count
     return np.maximum(wec_counts, wec_props)
@@ -59,6 +59,7 @@ def compute_targeted_alloc(formula_pop, total_pop, adj_sppe_, total_funds):
 
     targeted_authorization_amount = eligible_mask * weighted_formula_pop * adj_sppe_
     targeted_allocation = total_funds * (targeted_authorization_amount / targeted_authorization_amount.sum())
+
     return targeted_allocation
 
 
