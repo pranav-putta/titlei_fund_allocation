@@ -164,7 +164,7 @@ def main():
 
     # compute for N trials
     with multiprocessing.Pool(processes=args.num_workers) as pool:
-        noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
+        noisy_allocs = list((pool.imap(f, tqdm(range(args.num_trials), total=args.num_trials))))
 
     # take the average of the noisy allocations and update the dataframe
     noisy_basic_alloc, noisy_concentration_alloc, noisy_target_alloc = list(zip(*noisy_allocs))
