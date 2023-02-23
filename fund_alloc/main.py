@@ -145,7 +145,10 @@ def main():
 
     # set up noisy allocator function
     total_available_funds = (
-        basic_total_available_funds, concentration_total_available_funds, targeted_total_available_funds)
+        basic_total_available_funds,
+        concentration_total_available_funds,
+        targeted_total_available_funds
+    )
     f = partial(compute_noisy_alloc, df, epsilons, use_constraints, adj_sppe_, total_available_funds,
                 official_state_formula_population, official_national_population)
 
