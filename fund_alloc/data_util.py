@@ -257,11 +257,11 @@ def average_saipe(
             ]
         )
     combined = _average_saipe([
-        get_saipe(f"../datasets/saipe{str(year)[2:]}.xls")
+        get_saipe(f"datasets/saipe{str(year)[2:]}.xls")
         for year in range(year - year_lag, year + 1)
     ])
     combined_county = _average_saipe([
-        get_county_saipe(f"../../dataset/county_saipe{str(year)[2:]}.xls")
+        get_county_saipe(f"datasets/county_saipe{str(year)[2:]}.xls")
         for year in range(year - year_lag, year + 1)
     ])
     return combined, combined_county
@@ -333,16 +333,16 @@ def get_inputs(
         official_year = year
 
     official = get_official_combined(os.path.join(
-        f"../datasets/{baseline}_{str(official_year)[2:]}.xls"
+        f"datasets/{baseline}_{str(official_year)[2:]}.xls"
     ))
 
     # join with Census SAIPE
     if avg_lag > 0:
         saipe, county_saipe = average_saipe(year - 2, avg_lag, verbose=verbose)
     else:
-        saipe = get_saipe(f"../datasets/saipe{str(year - 2)[2:]}.xls")
+        saipe = get_saipe(f"datasets/saipe{str(year - 2)[2:]}.xls")
         county_saipe = get_county_saipe(
-            f"../datasets/county_saipe{str(year - 2)[2:]}.xls"
+            f"datasets/county_saipe{str(year - 2)[2:]}.xls"
         )
     # for some reason, NY naming convention different...
     # fixing that here

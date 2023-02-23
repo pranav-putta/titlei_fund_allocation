@@ -2,3 +2,4 @@ results
 fund_alloc/out
 .idea
 **/**/.DS_Store
+**/**/__pycache__

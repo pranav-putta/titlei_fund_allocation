@@ -5,9 +5,9 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from fund_alloc.constraint_opt import solve_hierarchical_counts
-from fund_alloc.data import get_inputs, get_sppe, compute_adj_sppe
-from fund_alloc.util import dgaussian_fn
+from constraint_opt import solve_hierarchical_counts
+from data_util import get_inputs, get_sppe, compute_adj_sppe
+from util_fns import dgaussian_fn
 
 
 def compute_basic_alloc(formula_pop, total_pop, adj_sppe_, total_funds):
@@ -108,7 +108,7 @@ def main():
 
     # load in school district data and state expenditure data
     df = get_inputs(2021, use_official_children=True)
-    sppe = get_sppe('../datasets/sppe18.xlsx')
+    sppe = get_sppe('datasets/sppe18.xlsx')
 
     df = df.join(sppe['ppe'].rename('sppe'), how='left')
     df = df.dropna(subset=['sppe'])
