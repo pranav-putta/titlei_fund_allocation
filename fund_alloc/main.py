@@ -1,6 +1,7 @@
 import multiprocessing
 from dataclasses import field
 from functools import partial
+from typing import List
 
 import numpy as np
 import pandas as pd
@@ -17,7 +18,7 @@ from mltoolkit import argclass, parse_args
 class Arguments:
     num_trials: int = field(default=1000)
     global_rho: float = field(default=0.1)
-    weights: list = field(default_factory=lambda: ([0.085, 0.274, 0.02].copy()))
+    weights: List[float] = field(default_factory=lambda: ([0.085, 0.274, 0.02].copy()))
     use_constraints: bool = field(default=True)
     num_workers: int = field(default=4)
 
