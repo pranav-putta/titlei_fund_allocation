@@ -90,12 +90,12 @@ def compute_noisy_alloc(df, epsilons, use_constraints, adj_sppe_, total_availabl
                         official_state_formula_population, official_national_population, _args):
     basic_funds, concentration_funds, target_funds = total_available_funds
     df['noisy_children_formula_count'] = df['official_children_formula_count'].apply(
-        lambda x: max(int(dgaussian_fn(x, 2.0 / epsilons[0])), 1))
+        lambda x: max(int(dgaussian_fn(2.0 / epsilons[0])(x)), 1))
     df['noisy_children_count'] = df['official_children_count'].apply(
-        lambda x: max(int(dgaussian_fn(x, 2.0 / epsilons[0])), 1))
+        lambda x: max(int(dgaussian_fn(2.0 / epsilons[0])(x)), 1))
     noisy_state_formula_count = official_state_formula_population.apply(
-        lambda x: max(int(dgaussian_fn(x, 1.0 / epsilons[1])), 1))
-    noisy_national_formula_count = max(int(dgaussian_fn(official_national_population, 1.0 / epsilons[2])), 1)
+        lambda x: max(int(dgaussian_fn(1.0 / epsilons[1])(x)), 1))
+    noisy_national_formula_count = max(int(dgaussian_fn(1.0 / epsilons[2])(official_national_population)), 1)
     if use_constraints:
         national, state, df['noisy_children_formula_count'] = solve_hierarchical_counts(
             pd.Series([noisy_national_formula_count]),
@@ -168,6 +168,7 @@ def main():
     start = time.time()
     with multiprocessing.Pool(processes=args.num_workers) as pool:
         noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
+    # noisy_allocs = [f(i) for i in tqdm(range(args.num_trials))]
 
     end = time.time()
     print(end - start, 's')
