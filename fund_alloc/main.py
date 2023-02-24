@@ -1,5 +1,6 @@
 import multiprocessing
 import os.path
+import time
 from dataclasses import field
 from functools import partial
 from typing import List
@@ -111,7 +112,7 @@ def compute_noisy_alloc(df, epsilons, use_constraints, adj_sppe_, total_availabl
     target_alloc = compute_targeted_alloc(noisy_children_formula_count, noisy_children_count, adj_sppe_,
                                           target_funds)
 
-    return basic_alloc, concentration_alloc, target_alloc
+    return basic_alloc, concentration_alloc, target_alloc, noisy_children_formula_count, noisy_children_count
 
 
 def main():
@@ -164,19 +165,28 @@ def main():
                 official_state_formula_population, official_national_population)
 
     # compute for N trials
+    start = time.time()
     with multiprocessing.Pool(processes=args.num_workers) as pool:
         noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
 
+    end = time.time()
+    print(end - start, 's')
     # take the average of the noisy allocations and update the dataframe
-    noisy_basic_alloc, noisy_concentration_alloc, noisy_target_alloc = list(zip(*noisy_allocs))
+    noisy_basic_alloc, noisy_concentration_alloc, noisy_target_alloc, noisy_children_formula_count, noisy_children_count = list(
+        zip(*noisy_allocs))
     avg_noisy_basic_alloc = pd.Series.sum(pd.concat(noisy_basic_alloc, axis=1), axis=1) / args.num_trials
     avg_noisy_concentration_alloc = pd.Series.sum(pd.concat(noisy_concentration_alloc, axis=1),
                                                   axis=1) / args.num_trials
     avg_noisy_target_alloc = pd.Series.sum(pd.concat(noisy_target_alloc, axis=1), axis=1) / args.num_trials
+    avg_noisy_children_formula_count = pd.Series.sum(pd.concat(noisy_children_formula_count, axis=1),
+                                                     axis=1) / args.num_trials
+    avg_noisy_children_count = pd.Series.sum(pd.concat(noisy_children_count, axis=1), axis=1) / args.num_trials
 
     df['avg_noisy_basic_alloc'] = avg_noisy_basic_alloc
     df['avg_noisy_concentration_alloc'] = avg_noisy_concentration_alloc
     df['avg_noisy_target_alloc'] = avg_noisy_target_alloc
+    df['avg_noisy_children_formula_count'] = avg_noisy_children_formula_count
+    df['avg_noisy_children_count'] = avg_noisy_children_count
 
     df['calculated_basic_alloc'] = basic_official_alloc
     df['calculated_concentrated_alloc'] = concentration_official_alloc
