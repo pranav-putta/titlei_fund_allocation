@@ -18,7 +18,7 @@ from mltoolkit import argclass, parse_args
 
 @argclass
 class Arguments:
-    num_trials: int = field(default=1000)
+    num_trials: int = field(default=10)
     global_rho: float = field(default=0.1)
     weights: List[float] = field(default_factory=lambda: ([0.085, 0.274, 0.02].copy()))
     use_constraints: bool = field(default=True)
@@ -166,22 +166,18 @@ def main():
 
     # compute for N trials
     start = time.time()
+    avgs = None
     with multiprocessing.Pool(processes=args.num_workers) as pool:
-        noisy_allocs = list(tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials))
-    # noisy_allocs = [f(i) for i in tqdm(range(args.num_trials))]
+        for results in tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials):
+            if avgs is None:
+                avgs = [pd.Series(np.zeros(len(df)), index=results[i].index) for i in range(len(results))]
+            avgs = [avgs[i] + (results[i] / args.num_trials) for i in range(len(results))]
 
     end = time.time()
     print(end - start, 's')
     # take the average of the noisy allocations and update the dataframe
-    noisy_basic_alloc, noisy_concentration_alloc, noisy_target_alloc, noisy_children_formula_count, noisy_children_count = list(
-        zip(*noisy_allocs))
-    avg_noisy_basic_alloc = pd.Series.sum(pd.concat(noisy_basic_alloc, axis=1), axis=1) / args.num_trials
-    avg_noisy_concentration_alloc = pd.Series.sum(pd.concat(noisy_concentration_alloc, axis=1),
-                                                  axis=1) / args.num_trials
-    avg_noisy_target_alloc = pd.Series.sum(pd.concat(noisy_target_alloc, axis=1), axis=1) / args.num_trials
-    avg_noisy_children_formula_count = pd.Series.sum(pd.concat(noisy_children_formula_count, axis=1),
-                                                     axis=1) / args.num_trials
-    avg_noisy_children_count = pd.Series.sum(pd.concat(noisy_children_count, axis=1), axis=1) / args.num_trials
+    avg_noisy_basic_alloc, avg_noisy_concentration_alloc, avg_noisy_target_alloc, \
+    avg_noisy_children_formula_count, avg_noisy_children_count = avgs
 
     df['avg_noisy_basic_alloc'] = avg_noisy_basic_alloc
     df['avg_noisy_concentration_alloc'] = avg_noisy_concentration_alloc
@@ -195,7 +191,10 @@ def main():
 
     if not os.path.exists('out/'):
         os.makedirs('out/', exist_ok=True)
-    df.to_csv(f'out/df_noisy_out_census_dp_rho={args.global_rho}.csv')
+
+    file_name = f'out/df_noisy_out_census_dp_rho={args.global_rho}.csv'
+    print(f'saving to {file_name}')
+    df.to_csv(file_name)
 
 
 if __name__ == '__main__':
