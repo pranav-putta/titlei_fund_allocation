@@ -117,7 +117,7 @@
 
 \begin{abstract}
 % Agencies, such as the U.S. Census Bureau, release data  sets  and  statistics  about  groups  of  individuals  that  are  used  as  input  to  a  number  of  critical decision processes.   To conform with privacy and confidentiality requirements, these agencies are of-ten required to release privacy-preserving versions of the data.   This paper studies the release of differentially private data sets and analyzes their impact on some critical resource allocation tasks under a fairness perspective.   The paper shows that,when the decisions take as input differentially private data,  the noise added to achieve privacy dis-proportionately impacts some groups over others.The paper analyzes the reasons for these disproportionate impacts and proposes guidelines to mitigate these effects.  The proposed approaches are evaluated on critical decision problems that use differentially private census data
-The decennial census  is a primary data for the US government to make critical decision. For example,  132 programs used Census Bureau data to distribute more than \$675 billion in funds during fiscal year 2015. In order to ensure the published census data does not reveal individual information, Census Bureau adopts  the differential privacy (DP) technique. In particular, in 20202 the Census Bureau implemented the Top Down algorithm which release statistical data from top (nation) to bottom hierarchical level (block). However, it was recently observed that the DP outcomes can introduce biased outcomes, especially for the minority groups. In this paper, we analyzes the reasons for these disproportionate impacts and proposes guidelines to mitigate these effects. We focus on two aspects that can produce the fair outcomes: (1) shape of allocation function and (2) impact of post-processing steps. 
+The decennial census is a primary source of data for the US government to make critical decisions. For example,  132 programs used Census Bureau data to distribute more than \$675 billion in funds during fiscal year 2015. In order to ensure the published census data does not reveal individual information, the Census Bureau adopts the differential privacy (DP) technique. In particular, in 2020, the Census Bureau implemented the Top Down algorithm which release statistical data from top (nation) to bottom hierarchical level (block). However, it was recently observed that the DP outcomes can introduce biased outcomes, especially for minority groups. In this paper, we analyze the reasons for these disproportionate impacts and proposes guidelines to mitigate these effects. We focus on two aspects that can produce the fair outcomes: (1) shape of allocation function and (2) impact of post-processing steps. 
 \end{abstract}
 
 \dates{This manuscript was compiled on \today}
@@ -145,7 +145,7 @@ during elections, Title I fund allocation in education \cite{pujol:20}
 and to establish national level COVID-19 vaccination distribution plans 
 for states and jurisdictions \cite{covid}.
 The resulting decisions can have significant societal, economic, and medical 
-impacts for participating individuals. 
+consequences for participating individuals. 
 
 In many cases, the released data
 contain sensitive information and their privacy is strictly regulated.
@@ -198,7 +198,7 @@ specifically, the paper makes the following contributions:
 To the best of the authors' knowledge, this is the first study that
 attempt at characterizing the relation between differential privacy
 and fairness in decision problems. All proofs are reported in the
-appendix.
+appendix. [Is this still true?]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -235,8 +235,7 @@ of \emph{global sensitivity} %, denoted by $\Delta_f$ and defined as
 \(
 \Delta_f = \max_{\bm{x} \sim \bm{x}'} \| f(\bm{x}) - f(\bm{x}') \|_1.
 \)
-The \emph{Laplace mechanism} \cite{Dwork:06} that outputs $f(\bm{x}) + \bm{\eta}$, where $\bm{\eta} \in \RR^n$ is drawn from the i.i.d.~Laplace distribution with $0$ mean and scale  $\nicefrac{\Delta_f}{\epsilon}$ over $n$ dimensions, achieves $\epsilon$-DP.
-
+The \emph{Laplace mechanism} \cite{Dwork:06} that outputs $f(\bm{x}) + \bm{\eta}$, where $\bm{\eta} \in \RR^n$ is drawn from the i.i.d.~Laplace distribution with $0$ mean and scale  $\nicefrac{\Delta_f}{\epsilon}$ over $n$ dimensions, achieves $\epsilon$-DP. Similarly, once can also utilize the Gaussian mechanism to satisfy $\epsilon$-DP by sampling from the Gaussian distribution with mean 0 and scale $\nicefrac{\Delta_f}{\epsilon}$. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem Setting and Goals}
@@ -295,7 +294,7 @@ The multiplicative error under mechanism $\cM$ and problem $P$ for entity $i$ is
 
 \end{definition}
 
-Our notation of fairness will be based on these two notations of errors. 
+Our notion of fairness will be based on these two notations of errors. 
 
 
 \begin{definition}[$\alpha$-fairness \cite{fioretto2021decision}]
@@ -324,14 +323,14 @@ Our notation of fairness will be based on these two notations of errors.
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Motivation examples}
+\section*{Motivating examples}
 \subsection{Title I school allocation}
 The \emph{Title I of the Elementary and Secondary Education Act of
-  1965} \cite{Sonnenberg:16} distributes about \$6.5 billion through
-basic grants. The federal allotment is divided among nearly 17000 qualifying school
+  1965} \cite{Sonnenberg:16} distributes funds through its basic, concentration, and target grants which account for \$6.2B, \$1.3B, and \$4.2B of allocations, respectively. The federal allotment is divided among nearly 17000 qualifying school
 districts in proportion to the count $x_i$ of children aged 5 to 17
-who live in necessitous families in district $i$.
-The allocation is formalized by:
+who live in necessitous families in district $i$. Each grant is specified by a set of thresholds that determines which districts are eligible for that particular grant. We refer to \cite{Sonnenberg:16} which discusses the specifics of each grant, which we describe briefly here.
+
+The basic allocation grant is formalized by:
 \newcommand{\tfa}{P^F}
 \newcommand{\rev}[1]{{\color{purple}{#1}}}
 \newcommand{\add}[1]{{\color{darkgreen}{#1}}}
@@ -341,23 +340,28 @@ The allocation is formalized by:
 \begin{align}
 \label{eq:allotment}%\tag{\text{$P_1$}}
   \tfa_i(\bm{x}) \defeq \left( 
-    \frac{x_i \cdot a_i}{\sum_{i \in [n] }x_i \cdot a_i}\right),
+  \frac{x_i \cdot a_i}{\sum_{i \in [n] }x_i \cdot a_i}\right) \cdot F_{B}
 \end{align}
-where $\bm{x} = (x_i)_{i\in[n]}$ is the vector of all districts counts 
-and $a_i$ is a weight factor reflecting students expenditures.  We consider applying Laplace mechanism with two privacy budgets $\epsilon =  0.01$ and $\epsilon = 0.001$ to release privately the school' population. These private counts are used to determine amount of money each school district should receive. The statistical bias in Definition \ref{def:bias} here represents the gain/loss in money USD a school can have under the privacy preserving mechanism. Figure \ref{fig:p1motivation} summarizes such quantity for all school districts in New York state. 
+where $\bm{x} = (x_i)_{i\in[n]}$ is the vector of all eligible districts counts 
+and $a_i$ is a weight factor reflecting students expenditures (defined as the adjusted state per-pupil expenditure). $F_{B}$ is the total basic Title I appropriation for the fiscal year. Finally, eligible districts are computed by thresholding; each grant type follows slightly different rules for eligbility. For example, a district is eligible for the basic grant if the population of eligible students is > 10 and the proportion of eligible students to total students in the district is > 0.02. Concentration grant eligibility is determined if the district contains > 6500 individuals or the proportion of eligible students is > 0.15. Lastly, districts are eligible for the targeted grant if they have > 10 eligible students and the proportion of eligible students is > 0.05. The funding is also weighted by population, as outlined in Section A of \cite{Sonnenberg:16}
+
+\subsection{Privacy Budget}
+The Disclosure Avoidance System for the US Census Bureau defines a global rho that is distributed hierarchically. The global privacy-loss budget for 2020 was defined as $\rho = 2.56$. The DAS suggests the use of this bound to conver the $\rho$-based privacy-loss budgets to the $\(\epsilon, \delta)$ equivalents. $\epislon = \rho + 2 * \sqrt{-\rho * \log_e{\delta}}$ where we define $\delta=10e-10$. In a 1-year estimate of the ACS, there are $1426$ different "Detailed tables" available from the US Census Bureau. The rho allocation for the national, state, and county level geographic hierarchies are $\frac{104}{4099}$, $\frac{1440}{4099}$, and $\frac{447}{4099}$ respectively. Assuming that the county level privacy-loss budget is split equally across these tables, each field would have $\rho = 2.56 \cdot \frac{447}{4099} \cdot \frac{1}{1426} = 0.0001957 $ at the county level, $\rho = 0.00063$ at the state level, and $\rho = 0.0000455$ at the national level.  
+
+We consider applying the Gaussian mechanism to satisfy differential privacy on children population estimate data along with a hierarchical constraint that ensures that the sum of the noisy population estimate of sub-hierarchies are consistent with their parent. For example, the sum of Title I-eligible children in the districts of Illinois should be consistent with the noisy estimate of Title I-eligible children at the state level. We experiment with three privacy budgets $\rho =  2.65$ and $\rho = 1.0$ and $\rho = 0.1$ to release privately the schools' population. These private counts are used to determine amount of money each school district should receive using the allocation mechanisms described above for the basic, concentration, and target grants. The statistical bias in Definition \ref{def:bias} here represents the gain/loss in USD a school can have under the privacy preserving mechanism. \ref{fig:missallocs_total} summarizes our findings of the bias as a function of district size for all $13,190$ districts. We observe that misallocations are most pronounced at thresholds for each grant, and substantially impact smaller school districts more than larger ones.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\linewidth]{images/fig2.pdf}
-\caption{Disproportionate Title 1 Funds Allocation in NY.}
-\label{fig:p1motivation}
+\includegraphics[width=0.7\linewidth]{images/all_grant_errors_normalized_vs_pop.png}
+\caption{Disproportionate Title 1 Funds Allocations in the US}
+\label{fig:missallocs_total}
 \end{figure}
 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.48\linewidth, height=80pt]{images/corr_num_school_alpha.pdf}
-    \includegraphics[width=0.48\linewidth, height=80pt]{images/corr_num_students_alpha.pdf}
+    \includegraphics[width=0.48\linewidth, height=80pt]{images/af_vs_num_schools_per_state.png}
+    \includegraphics[width=0.48\linewidth, height=80pt]{images/af_vs_num_students_per_state.png}
     \caption{Correlation between number of schools (left) and number of students (right) per state with its level of $\alpha$ fairness. }
     \label{fig:corr_fair_num_schools}
     \label{fig:corr_fair_num_students}
@@ -365,21 +369,72 @@ and $a_i$ is a weight factor reflecting students expenditures.  We consider appl
 
 
 \begin{figure*}[h]
+  \centering
+  \begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/af_by_state.png}
+    \caption{Level of $\alpha$ fairness per state under Baseline mechanism (BL) at $\rho = 2.56$}
+    \label{fig:state_alpha}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/af_by_student.png}
+    \caption{Level of $\alpha$ fairness per student under Baseline mechanism (BL) at $\rho = 2.56$}
+    \label{fig:student_alpha}
+  \end{subfigure}
+  \caption{Fairness comparison}
+  \label{fig:fairness_comparison}
+\end{figure*}
+
+
+\begin{figure*}[h]
 \centering
-\includegraphics[width=1.0\linewidth]{images/states_alpha.pdf}
-\caption{Level of  $\alpha$ fairness per state  under Baseline mechanism (BL) at $\epsilon = 0.1$}
+\includegraphics[width=0.5\linewidth]{images/af_states_map.png}
+\caption{Level of  $\alpha$ fairness per state  under Baseline mechanism (BL) at $\rho = 2.56$}
 \label{fig:state_alpha}
 \end{figure*}
 
 
-It can be seen from Figure \ref{fig:p1motivation} that schools of low population receive much more money than their actual needs, while schools of high population receive less. This figure made a clear evidence on the disparate impact of the privacy preserving mechanism in practice. 
+
+It can be seen from Figure \ref{fig:missallocs_total} that schools of low population receive far more money than they actually need as a consequence of the bias in the allocation mechanism, while larger districts may actually receive less funding. This figure made a clear evidence on the disparate impact of the privacy preserving mechanism in practice. 
 
 
 \subsection*{Further analysis}
 
-While there is a some level of unfairness under privacy-preserving mechanism towards different school districts,  we observed that level varies differently by state. We report the fairness level per state, i.e the difference between the maximum bias minus the minimum bias per state in Figure \ref{fig:state_alpha}. We see that under $\epsilon = 0.1$ California has the largest unfairness level over its schools.   
+While there is a some level of unfairness under privacy-preserving mechanism towards different school districts,  we observed that level varies differently by state. We report the fairness level per state, i.e the difference between the maximum bias minus the minimum bias per state in Figure \ref{fig:state_alpha}. We see that under $\rho = 2.65$ California has the largest unfairness level over its schools.   
 
 To understand why California has the highest  level of unfairness,  we provide the scatter plot between level of fairness $\alpha$ per state with its number of schools and its number of students in Figure \ref{fig:corr_fair_num_schools}. We observed a Pearson correlation of 0.37 between the number of schools per state and its fairness level. Also, a high Pearson correlation of 0.71 between number of state's students and its fairness level . A In other words, the state with more schools and more students tends to be suffered more unfairness. For example, the California state has the highest number of students, more than 6.5 million students overall. It also ranks secondly based on the number of schools with  1022 schools just below Texas with 1222 schools. This partly explains why this state suffers the most unfairness for all schools as showed in Figure \ref{fig:state_alpha}. 
+
+\subsection*{Misallocations noramlized per student}
+Examining both total misallocations and misallocations per student is crucial when assessing the impact of differential privacy on the allocation of Title I education funds in districts. Total misallocations provide a comprehensive perspective by considering the absolute magnitude of funding disparities across states. It enables us to identify states that are disproportionately affected in terms of the overall amount of misallocated funds. This analysis is important because significant total misallocations could lead to substantial disparities in educational resources, hindering the ability of disadvantaged districts to provide quality education.
+
+On the other hand, evaluating misallocations per student offers a more nuanced understanding of the fairness of funding distribution. It allows us to account for the relative impact on individual students within each state. By examining misallocations per student, we can identify states where the disparity in funding affects a larger proportion of the student population, potentially exacerbating educational inequalities and limiting opportunities for marginalized students.
+
+When funds are misallocated in total, it can particularly affect certain types of funding. For instance, if a state with a higher population of disadvantaged students experiences a significant total misallocation, it may receive insufficient funding to adequately support targeted interventions, such as specialized educational programs, additional resources, or support services for at-risk students. This can further perpetuate existing disparities and hinder efforts to address educational inequities.
+
+Similarly, when funds are seen misallocated per student, it highlights the distributional challenges faced by specific states. If a state with a higher concentration of disadvantaged students experiences larger misallocations per student, it may imply that individual students in that state are being deprived of the financial support they require to succeed academically. This can impact the availability of resources such as instructional materials, qualified teachers, technology, or extracurricular activities, impeding their educational progress and perpetuating systemic inequalities.
+
+In conclusion, analyzing both total misallocations and misallocations per student provides a comprehensive understanding of the impact of differential privacy on the allocation of Title I education funds. This dual perspective helps identify states disproportionately affected in terms of both the absolute amount of misallocated funds and the relative impact on individual students. By examining these two aspects, policymakers can gain insights into the specific challenges faced by different states and devise targeted strategies to ensure fair and equitable distribution of education funds.
+
+\section*{Section 203 of the Voting Rights Act}
+Section 203 of the Voting Rights Act requires certain jurisdictions to provide bilingual election materials and assistance to voters who are not proficient in English. To determine which jurisdictions are covered by this provision, the Census Bureau collects data on the number and percentage of voting-age citizens who are members of a language minority group and have limited English proficiency.
+
+The Census Bureau uses three measures to calculate these numbers: the Limited English Proficient Population Count (LEPPCT), the Voting Age Citizen In-Language Count (VACIT), and the Voting Age Citizen Language Minority Group Citizen Voting Age Population (VACLEP).
+
+The LEPPCT is the percentage of people in a language minority group who have limited English proficiency. The VACIT is the number of voting-age citizens who are members of a language minority group and who have indicated a need for language assistance in voting. The VACLEP is the number of voting-age citizens who are members of a language minority group.
+
+By using these three measures, the Census Bureau determines which jurisdictions meet the criteria for coverage under Section 203. This information is then used by election officials to provide bilingual election materials and assistance to voters who need it, ensuring that everyone has an equal opportunity to participate in the electoral process.
+
+\subsection*{Allocation Formula}
+To explain how coverage is computed based on the given formulas, we can break them down into terms:
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.5\linewidth]{images/true_noisy_leppct_2.65.png}
+\caption{LEPPCT vs. LEPPCT noisy values after DP mechanism at $\rho=2.65$}
+\label{fig:state_alpha}
+\end{figure*}
+
 
 
 \section*{Differentially Private mechanisms}

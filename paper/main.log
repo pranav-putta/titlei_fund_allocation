@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  23 FEB 2023 11:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  2 JUN 2023 15:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1227,7 +1227,14 @@ File: pstricks.tex 2022/01/09 v3.13 `PSTricks' (tvz,hv)
 (/usr/local/texlive/2022/texmf-dist/tex/generic/pstricks/pst-fp.tex
 `pst-fp' v0.06, 2020/11/20 (hv))
 File: pst-fp.tex 2020/11/20 v0.06 `PST-fp' (hv)
-) (./main.aux)
+) (./main.aux
+
+LaTeX Warning: Label `fig:state_alpha' multiply defined.
+
+
+LaTeX Warning: Label `fig:state_alpha' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 126.
@@ -1248,8 +1255,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 126.
 LaTeX Font Info:    ... okay on input line 126.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 126.
 LaTeX Font Info:    ... okay on input line 126.
-
-(/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count407
 \scratchdimen=\dimen361
@@ -1549,122 +1555,275 @@ Package natbib Warning: Citation `Dwork:06' on page 2 undefined on input line 2
 38.
 
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-52.
+51.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<images/figure.pdf, id=34, 554.07pt x 147.55125pt>
+<images/figure.pdf, id=38, 554.07pt x 147.55125pt>
 File: images/figure.pdf Graphic file (type pdf)
 <use images/figure.pdf>
-Package pdftex.def Info: images/figure.pdf  used on input line 271.
+Package pdftex.def Info: images/figure.pdf  used on input line 270.
 (pdftex.def)             Requested size: 221.48567pt x 58.98117pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
+Underfull \hbox (badness 10000) in paragraph at lines 280--281
 []\T1/lmr/m/it/9 (+20) The sta-tis-ti-cal bias
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 294--295
+Underfull \hbox (badness 10000) in paragraph at lines 293--294
 []\T1/lmr/m/it/9 (+20) The mul-ti-plica-tive
  []
 
 
 Package natbib Warning: Citation `fioretto2021decision' on page 2 undefined on 
-input line 301.
+input line 300.
 
 
 Package natbib Warning: Citation `Sonnenberg:16' on page 2 undefined on input l
-ine 330.
+ine 329.
 
-<images/fig2.pdf, id=38, 485.31pt x 234.3085pt>
-File: images/fig2.pdf Graphic file (type pdf)
-<use images/fig2.pdf>
-Package pdftex.def Info: images/fig2.pdf  used on input line 351.
-(pdftex.def)             Requested size: 172.26704pt x 83.17116pt.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+Package natbib Warning: Citation `Sonnenberg:16' on page 2 undefined on input l
+ine 331.
 
-<images/corr_num_school_alpha.pdf, id=39, 470.63016pt x 282.6146pt>
-File: images/corr_num_school_alpha.pdf Graphic file (type pdf)
-<use images/corr_num_school_alpha.pdf>
-Package pdftex.def Info: images/corr_num_school_alpha.pdf  used on input line 3
-59.
-(pdftex.def)             Requested size: 118.12402pt x 79.99832pt.
-<images/corr_num_students_alpha.pdf, id=40, 470.63016pt x 282.6146pt>
-File: images/corr_num_students_alpha.pdf Graphic file (type pdf)
-<use images/corr_num_students_alpha.pdf>
-Package pdftex.def Info: images/corr_num_students_alpha.pdf  used on input line
- 360.
-(pdftex.def)             Requested size: 118.12402pt x 79.99832pt.
-<images/states_alpha.pdf, id=41, 1807.15152pt x 719.37508pt>
-File: images/states_alpha.pdf Graphic file (type pdf)
-<use images/states_alpha.pdf>
-Package pdftex.def Info: images/states_alpha.pdf  used on input line 369.
-(pdftex.def)             Requested size: 505.69374pt x 201.3029pt.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+Package natbib Warning: Citation `Sonnenberg:16' on page 2 undefined on input l
+ine 346.
 
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 381.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 347.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 6.64998pt on input line 381.
+(Font)              scaled to size 6.64998pt on input line 347.
 [2 <./images/figure.pdf>]
-Overfull \hbox (24.62527pt too wide) in paragraph at lines 403--404
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.349 ...ho$-based privacy-loss budgets to the $\(
+                                                  \epsilon, \delta)$ equival...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+<recently read> \epislon 
+                         
+l.349 ...\epsilon, \delta)$ equivalents. $\epislon
+                                                   = \rho + 2 * \sqrt{-\rho ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<images/all_grant_errors_normalized_vs_pop.png, id=131, 901.2069pt x 991.5444pt
+>
+File: images/all_grant_errors_normalized_vs_pop.png Graphic file (type png)
+<use images/all_grant_errors_normalized_vs_pop.png>
+Package pdftex.def Info: images/all_grant_errors_normalized_vs_pop.png  used on
+ input line 355.
+(pdftex.def)             Requested size: 172.26704pt x 189.53012pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/af_vs_num_schools_per_state.png, id=133, 409.7709pt x 323.7696pt>
+File: images/af_vs_num_schools_per_state.png Graphic file (type png)
+<use images/af_vs_num_schools_per_state.png>
+Package pdftex.def Info: images/af_vs_num_schools_per_state.png  used on input 
+line 363.
+(pdftex.def)             Requested size: 118.12396pt x 79.9986pt.
+<images/af_vs_num_students_per_state.png, id=134, 409.7709pt x 323.7696pt>
+File: images/af_vs_num_students_per_state.png Graphic file (type png)
+<use images/af_vs_num_students_per_state.png>
+Package pdftex.def Info: images/af_vs_num_students_per_state.png  used on input
+ line 364.
+(pdftex.def)             Requested size: 118.12396pt x 79.9986pt.
+
+! LaTeX Error: Environment subfigure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.373   \begin{subfigure}
+                         [t]{0.49\linewidth}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.373   \begin{subfigure}[t]{0.49\linewidth}
+                                            
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   }
+l.373   \begin{subfigure}[t]{0.49\linewidth}
+                                            
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+<images/af_by_state.png, id=135, 429.2838pt x 268.8444pt>
+File: images/af_by_state.png Graphic file (type png)
+<use images/af_by_state.png>
+Package pdftex.def Info: images/af_by_state.png  used on input line 375.
+(pdftex.def)             Requested size: 505.69374pt x 316.69626pt.
+
+! LaTeX Error: \begin{figure*} on input line 371 ended by \end{subfigure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.378   \end{subfigure}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Environment subfigure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.380   \begin{subfigure}
+                         [t]{0.49\linewidth}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.380   \begin{subfigure}[t]{0.49\linewidth}
+                                            
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   }
+l.380   \begin{subfigure}[t]{0.49\linewidth}
+                                            
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+<images/af_by_student.png, id=136, 429.2838pt x 268.8444pt>
+File: images/af_by_student.png Graphic file (type png)
+<use images/af_by_student.png>
+Package pdftex.def Info: images/af_by_student.png  used on input line 382.
+(pdftex.def)             Requested size: 505.69374pt x 316.69626pt.
+
+! LaTeX Error: \begin{figure*} on input line 371 ended by \end{subfigure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.385   \end{subfigure}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Float too large for page by 35.95624pt on input line 388.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/af_states_map.png, id=137, 429.2838pt x 268.8444pt>
+File: images/af_states_map.png Graphic file (type png)
+<use images/af_states_map.png>
+Package pdftex.def Info: images/af_states_map.png  used on input line 393.
+(pdftex.def)             Requested size: 252.84686pt x 158.34607pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[3 <./images/all_grant_errors_normalized_vs_pop.png> <./images/af_vs_num_school
+s_per_state.png> <./images/af_vs_num_students_per_state.png>]
+<images/true_noisy_leppct_2.65.png, id=153, 344.0052pt x 338.2236pt>
+File: images/true_noisy_leppct_2.65.png Graphic file (type png)
+<use images/true_noisy_leppct_2.65.png>
+Package pdftex.def Info: images/true_noisy_leppct_2.65.png  used on input line 
+433.
+(pdftex.def)             Requested size: 252.84686pt x 248.5991pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (24.62527pt too wide) in paragraph at lines 458--459
 []
  []
 
 
-Overfull \hbox (12.95746pt too wide) detected at line 407
+Overfull \hbox (12.95746pt too wide) detected at line 462
 \OMS/lmsy/m/n/9 M[] [][] \OT1/lmr/m/n/9 = []  [][]  []  [] \OML/lmm/m/it/9 v[] 
 \OT1/lmr/m/n/9 = 1\OML/lmm/m/it/9 ;  \OML/lmm/b/it/9 v \OMS/lmsy/m/n/9 ^^U \OT1
 /lmr/bx/n/9 0 \OML/lmm/m/it/9 :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 412--414
+Underfull \hbox (badness 10000) in paragraph at lines 467--469
 []
  []
 
 
-Package natbib Warning: Citation `pujol2020fair' on page 3 undefined on input l
-ine 418.
+Package natbib Warning: Citation `pujol2020fair' on page 4 undefined on input l
+ine 473.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 419--420
+Underfull \hbox (badness 10000) in paragraph at lines 474--475
 []\T1/lmr/m/it/9 (+20) The \T1/lmr/m/n/9 (+20) re-
  []
 
 
-Package natbib Warning: Citation `pujol2020fair' on page 3 undefined on input l
-ine 430.
+Package natbib Warning: Citation `pujol2020fair' on page 4 undefined on input l
+ine 485.
 
-[3 <./images/fig2.pdf> <./images/corr_num_school_alpha.pdf
+[4]
 
-pdfTeX warning: pdflatex (file ./images/corr_num_school_alpha.pdf): PDF inclusi
-on: multiple pdfs with page group included in a single page
-> <./images/corr_num_students_alpha.pdf
+LaTeX Warning: Reference `fig:p1motivation' on page 5 undefined on input line 5
+51.
 
-pdfTeX warning: pdflatex (file ./images/corr_num_students_alpha.pdf): PDF inclu
-sion: multiple pdfs with page group included in a single page
->]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 510.
+(Font)              scaled to size 7.59998pt on input line 565.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 510.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 565.
 LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
-(Font)              scaled to size 7.59998pt on input line 510.
+(Font)              scaled to size 7.59998pt on input line 565.
+
+Package natbib Warning: Citation `cohen2021census' on page 5 undefined on input
+ line 566.
 
 
-Package natbib Warning: Citation `cohen2021census' on page 4 undefined on input
- line 511.
-
-
-Overfull \hbox (29.95026pt too wide) in paragraph at lines 557--558
+Overfull \hbox (29.95026pt too wide) in paragraph at lines 612--613
 []
  []
 
 
-Overfull \hbox (11.4158pt too wide) detected at line 561
+Overfull \hbox (11.4158pt too wide) detected at line 616
 \OMS/lmsy/m/n/9 M[]\OT1/lmr/m/n/9 ([])[] = []  [][]  []  [] \OML/lmm/m/it/9 v[]
  \OT1/lmr/m/n/9 = 1\OML/lmm/m/it/9 ;  \OML/lmm/b/it/9 v \OMS/lmsy/m/n/9 ^^U \OT
 1/lmr/bx/n/9 0 \OML/lmm/m/it/9 :
@@ -1675,55 +1834,63 @@ Package natbib Warning: There were undefined citations.
 
 
 AED: lastpage setting LastPage
-[4 <./images/states_alpha.pdf>] (./main.aux)
+[5] [6 <./images/af_by_state.png> <./images/af_by_student.png>] [7 <./images/af
+_states_map.png> <./images/true_noisy_leppct_2.65.png>] (./main.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FC0D6A5E198E2E09D7906A4DE1DB06F2;182.
+(rerunfilecheck)             Checksum: 1318949134C0934A4E8AE244B0FF6858;303.
  ) 
 Here is how much of TeX's memory you used:
- 39111 strings out of 478268
- 768932 string characters out of 5846347
- 1053240 words of memory out of 5000000
- 56285 multiletter control sequences out of 15000+600000
- 592879 words of font info for 270 fonts, out of 8000000 for 9000
+ 39178 strings out of 478268
+ 770297 string characters out of 5846347
+ 1053499 words of memory out of 5000000
+ 56317 multiletter control sequences out of 15000+600000
+ 601494 words of font info for 285 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,14n,118p,1001b,1234s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
-exlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/te
+ 115i,14n,118p,1217b,1234s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
+texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2022/te
 xmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/f
 onts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/d
 vips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ma
 thsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr
 /local/texlive/2022/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/lo
-cal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/loc
-al/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/loc
-al/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
-/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/
-texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/202
-2/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-di
-st/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/ty
-pe1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/
-lm/lmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi9.pf
-b></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/l
-ocal/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmib7.pfb></usr/local/texli
-ve/2022/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2022/texm
-f-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts
-/type1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publi
-c/lm/lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri9.p
-fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr
-/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/texl
-ive/2022/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2022/te
-xmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2022/texmf-dist/fo
-nts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/p
-ublic/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2022/texmf-dist/fonts/
-type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/u
-rw/helvetic/uhvbo8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/hel
-vetic/uhvr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/helvetic/u
-hvro8a.pfb>
-Output written on main.pdf (4 pages, 662709 bytes).
+cal/texlive/2022/texmf-dist/fonts/type1/bitstrea/charter/bchbi8a.pfb></usr/loca
+l/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local
+/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local
+/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/t
+exlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2022/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2022/
+texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist
+/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type
+1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm
+/lmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi9.pfb>
+</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/loc
+al/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmib7.pfb></usr/local/texlive
+/2022/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2022/texmf-
+dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/t
+ype1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/
+lm/lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri9.pfb
+></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/l
+ocal/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/texliv
+e/2022/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2022/texm
+f-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2022/texmf-dist/font
+s/type1/public/lm/lmsy9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/pub
+lic/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1
+/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2022/texmf-dist/fonts/ty
+pe1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw
+/helvetic/uhvbo8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/helve
+tic/uhvr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/helvetic/uhv
+ro8a.pfb>
+Output written on main.pdf (7 pages, 810437 bytes).
 PDF statistics:
- 474 PDF objects out of 1000 (max. 8388607)
- 254 compressed objects within 3 object streams
- 33 named destinations out of 1000 (max. 500000)
- 89646 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 338 PDF objects out of 1000 (max. 8388607)
+ 236 compressed objects within 3 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 92229 words of extra memory for PDF output out of 106986 (max. 10000000)
 

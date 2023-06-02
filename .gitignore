@@ -1,5 +1,7 @@
 results
-fund_alloc/out
 .idea
 **/**/.DS_Store
 **/**/__pycache__
+fund_alloc/datasets
+fund_alloc/out
+
