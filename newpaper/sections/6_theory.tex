@@ -1,0 +1,188 @@
+\section*{Differentially Private mechanisms}
+To release privately the outcomes $P^F_i$ given a privacy constraint $\epsilon$, there are several mechanisms. These mechanisms can roughly be divided into the two categories, strict and non-strict allocation mechanisms. A strict allocation mechanism requires that
+its outcome should always lie in the probability simplex $\Delta_n = \{x \  | x \in {\mathbb{R}^{+}}^{n}, \boldsymbol{1}^T x =1 \}$ while a non-strict allocation mechanism
+only asks its output to be non-negative. The rest of this report aims to study the (approximate) optimal
+(strict allocation) mechanisms under different fairness metrics.
+\subsection*{Strict Allocation Mechanism}
+
+\begin{definition}
+	[Baseline Mechanism (BL)]
+	The \emph{baseline mechanism} outputs the allocation for each distribute $i\in [n]$ as follows.
+	\begin{equation*}
+		\blmech{\noisydata}_i = \frac{a_i\cdot \relu{\tilde{x}_i}}{\sum_{j=1}^n a_j\cdot \relu{\tilde{x}_j}}\,.
+	\end{equation*}
+\end{definition}
+
+Where $\tilde{x}_i$ is the noisy private population count, while the supscript $x_{+} = \max(x, 0)$ takes the non-negative part of the number $x$.
+
+
+\begin{definition}
+	[Projection onto Simplex Mechanism (PoS)]
+	The \emph{projection onto simplex mechanism} outputs the allocation for each distribute $i\in [n]$ as follows.
+	\begin{equation*}
+		\posmech{\noisydata}_i = \underset{\bm{v}\in\RR^n}{\arg\min}~\norm{\bm{v}-\noisyalloc}_2\qquad\mathrm{s.t.}~
+		\sum_{i=1}^n v_i = 1,~\bm{v}\geq \bm{0}\,.
+	\end{equation*}
+\end{definition}
+
+\subsection*{Non-strict Allocation Mechanism}
+\begin{definition}
+	[Positive Allocation Mechanism (PA)]
+	The \emph{positive allocation mechanism}
+	outputs the allocation for each distribute $i\in [n]$ as follows.
+	\begin{equation*}
+		\pamech{\noisydata}_i  =  \relu{\nalloci{i}}= \relu{\frac{a_i\cdot \tilde{x}_i}{\sum_{j=1}^n a_j\cdot \tilde{x}_j}}\,.
+	\end{equation*}
+\end{definition}
+\begin{definition}
+	[Repair Mechanism (RP) \cite{pujol:20}]
+	The \emph{repair mechanism} outputs the allocation for each distribute $i\in [n]$ as follows.
+	\begin{equation*}
+		\rpmech{\noisydata}_i  = \frac{a_i\cdot \relu{\tilde{x}_i}+\Delta}{\sum_{j=1}^n a_j\cdot \relu{\tilde{x}_j} - \Delta'}\,,
+	\end{equation*}
+	where
+	\begin{equation*}
+		\Delta= \frac{\ln\left(2n/\delta\right)}{\epsilon}\,,\qquad\Delta' =
+		\frac{n\ln\left(2n^2/\delta\right)}{\epsilon}\,.
+	\end{equation*}
+\end{definition}
+
+\begin{proposition}
+	[No-penalty allocation \cite{pujol:20}]
+	The following inequality holds with probability at least $1-\delta$.
+	\begin{equation*}
+		\rpmech{\noisydata}_i\geq \talloci{i}\,,\qquad\forall~i\in[n]\,.
+	\end{equation*}
+\end{proposition}
+
+
+\section*{Source of unfairness}
+We investigate the two main sources of unfairness highlighted in previous section: (1) shape of allocation function and (2) post-processing steps.
+\subsection*{Shape of allocation function}
+
+\begin{theorem}
+	\label{lem:fair_bound_allottments}
+	Let $P$ be an allotment problem which is at least twice differentiable.
+	A data-release mechanism $\cM$ is $\alpha$-fair w.r.t.~$P$ for some
+	$\alpha < \infty$ if there exist some constant values
+% $c_i \; (i \in [n])$ such that,
+% for all datasets $\bm{x} \in \cX$,
+% \[
+% \Tr(\bm{H}P_i)(\bm{x}) = c_i \;\; (i \in [n]).
+% \]
+	$c^i_{jl} \; (i \in [n], j,l \in [k])$ such that, for all datasets $\bm{x} \in \cX$,
+	\[
+		(\bm{H}P_i)_{j,l}(\bm{x}) = c^i_{j,l}   \;\; (i\in[n]\; j,l\in[k]).
+	\]
+\end{theorem}
+
+\begin{corollary}
+	\label{cor:2}
+	If $P$ is a linear function, then $\cM$ is fair w.r.t.~$P$.
+\end{corollary}
+
+
+\begin{corollary}
+	\label{cor:3}
+	$\cM$ is fair w.r.t.~$P$ if there exists a constant $c$ such that,
+	for all dataset $\bm{x}$,
+	\[
+		\mbox{Tr}(\bm{H}P_i)(\bm{x}) = c \;\; (i \in [n]).
+	\]
+\end{corollary}
+
+\begin{corollary}
+	Consider an allocation problem $P$. Mechanism $\cM$ is not fair
+	w.r.t.~$P$ if there exist two entries $i, j \in [n]$ such that
+	$\mbox{Tr}(\bm{H}P_i)(\bm{x}) \neq \mbox{Tr}(\bm{H}P_j)(\bm{x})$ for some dataset
+	$\bm{x}$.
+\end{corollary}
+
+\noindent
+The above implies that fairness cannot be achieved if $P$ is \emph{a
+non-convex function}, as is the case for \emph{all} the allocation
+problems considered in this paper. {\em A fundamental consequence of
+this result is the recognition that adding Laplacian noise to the
+inputs of the motivating example will necessarily introduce fairness
+issues.} For instance, consider $\tfa$ and notice that the trace of
+its Hessian
+\[
+	\mbox{Tr}(\bm{H}\tfa_i) = 2a_i \left[
+		\frac{x_i \sum_{j\in[n]} a_j^2 - a_i \left(\sum_{j\in[n]} x_ja_j\right)}
+		{\left(\sum_{j\in[n]}x_ja_j\right)^3}
+		\right],
+\]
+is not constant with respect to its inputs. Thus, any two entries $i,
+j$ whose $x_i \neq x_j$ imply $\mbox{Tr}(\bm{H}\tfa_i) \neq
+\mbox{Tr}(\bm{H}\tfa_j)$. As illustrated in Figure \ref{fig:p1motivation},
+Problem $\tfa$ can introduce significant disparity errors. For $\epsilon = 0.001,
+0.01$, and $0.1$ the estimated fairness bounds are $0.003$, $3\times
+10^{-5}$, and $1.2\times 10^{-6}$ respectively, which amount to an
+average misallocation of \$43,281, \$4,328, and \$865.6 respectively.
+The estimated fairness bounds were obtained by performing a linear
+search over all $n$ school districts and selecting the maximal
+$\mbox{Tr}(\bm{H}\tfa_i)$.
+
+
+\subsection*{Impact of post-processing}
+The post-processing steps can be applied at the inputs $x$, over the outcome $P^F_{i}(x)$ or at both. We investigate the impact of post-processing over input and outcome separately in this section.
+
+
+\subsubsection*{Post-processing over the inputs}
+This step is performed to make sure the released private counts satisfies consistency constraints \cite{cohen2021census}. For example, the released private counts should be non-negative integer numbers, or sum of counts at all cities' in a state should be equal to that state's count.
+
+
+\noindent \textbf{Non-negative truncation} $\tilde{x} = \max(0, \tilde{x}) $
+
+We have the following result which state that non-negative truncation introduces positive bias, and the closer to zero the true count is, the higher the bias.
+\begin{theorem}
+	\label{lem:exp_clipped_lap}
+	Let $\tilde{x} = x + \mbox{Lap}(\lambda)$, with scale $\lambda > 0$,
+	and $\hat{x} = \text{PP}^{\geq \ell}(\tilde{x})$, with $\ell < x$,
+	be its post-processed value. Then,
+	$$
+	\EE[\hat{x}] = x + \frac{\lambda}{2} \exp(\frac{\ell - x}{\lambda} ).
+	$$
+\end{theorem}
+
+
+\noindent \textbf{Integral transform}
+
+The integral transform $\text{PP}^{\mathbb{N}}(z)$ is used when the released data should be of integral quantities. To make sure that this processing step does not introduce additional bias, we can rely on the stochastic rounding technique:
+
+\begin{equation}
+	\text{PP}^{\mathbb{N}}(z) = \begin{cases}
+									\lfloor z \rfloor   \ \mbox{w.p.:} \  1 -(z- \lfloor z \rfloor ) \\
+									\lfloor z \rfloor  +1 \ \ \mbox{w.p.:} \  z - \lfloor z \rfloor
+	\end{cases}
+\end{equation}
+
+
+The stochastic rounding guarantees that $\mathbb{E} [\text{PP}^{\mathbb{N}}(\tilde{x})] = \tilde{x} $ so no additional bias will introduce to $\text{PP}^{\mathbb{N}}(\tilde{x})$
+
+
+\subsubsection*{Post-processing over the outcomes}
+
+\section*{Mitigating Solutions}
+\subsection*{Mechanisms}
+Different kind of post-processing mechanisms are considered in this section. These mechanisms
+require that
+their outcomes should always lie in the probability simplex $\Delta_n$. The rest of this work aims to study the (approximate) optimal mechanisms under different fairness metrics.
+\begin{definition}
+	[Baseline Mechanism (BL)]
+	The \emph{baseline mechanism} outputs the allocation for each entity $i\in [n]$ as follows.
+	\begin{equation*}
+		\cM_{\mathrm{BL}}(\noisydata)_i = \frac{a_i\cdot \relu{\tilde{x}_i}}{\sum_{j=1}^n a_j\cdot \relu{\tilde{x}_j}}\,.
+	\end{equation*}
+\end{definition}
+
+\begin{definition}
+	[Projection onto Simplex Mechanism (PoS)]
+	The \emph{projection onto simplex mechanism} outputs the allocation for each entity $i\in [n]$ as follows.
+	\begin{equation*}
+		\cM_{\mathrm{PoS}}(\noisydata)_i= \underset{\bm{v}\in\RR^n}{\arg\min}~\norm{\bm{v}-\noisyalloc}_2\qquad\mathrm{s.t.}~
+		\sum_{i=1}^n v_i = 1,~\bm{v}\geq \bm{0}\,.
+	\end{equation*}
+\end{definition}
+
+

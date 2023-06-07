@@ -14,8 +14,10 @@ def gpu_dgaussian_samples(scale, device, shape):
     prob = torch.tensor(prob / prob.sum(), device=device)  # normalize the probabilities so their sum is 1
 
     # create a tensor of samples
+    x = torch.tensor(x, device=device)
     num_samples = int(np.prod(shape))
-    samples = torch.multinomial(prob, num_samples=num_samples, replacement=True).to(torch.int)
+    samples = torch.multinomial(prob, num_samples=num_samples, replacement=True)
+    samples = x[samples].to(torch.int)
     samples = samples.view(shape)
     return samples
 

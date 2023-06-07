@@ -1,0 +1,53 @@
+\begin{thebibliography}{10}
+
+\bibitem{pujol:20}
+S Kuppam, et~al., Fair decision making using privacy-protected data (2020).
+
+\bibitem{covid}
+L Simunaci, Pro rata vaccine distribution is fair, equitable (\url{t.ly/sDa9})
+  (2021).
+
+\bibitem{title13}
+T 13, Title~13, u.s.~code
+  (\url{www.census.gov/history/www/reference/privacy_confidentiality/title_13_us_code.html})
+  (2006) Accessed: 2021-01-15.
+
+\bibitem{GDPR}
+GDPR, What is gdpr, the eu’s new data protection law?
+  (\url{https://gdpr.eu/what-is-gdpr}) (2020) Accessed: 2021-01-15.
+
+\bibitem{abowd2018us}
+JM Abowd, The us census bureau adopts differential privacy in {\em Proceedings
+  of the 24th ACM SIGKDD International Conference on Knowledge Discovery \&
+  Data Mining}.
+\newblock pp. 2867--2867 (2018).
+
+\bibitem{Dwork:06}
+C Dwork, F McSherry, K Nissim, A Smith, Calibrating noise to sensitivity in
+  private data analysis in {\em Theory of cryptography conference}.
+\newblock (Springer), pp. 265--284 (2006).
+
+\bibitem{Dwork:13}
+C Dwork, A Roth, The algorithmic foundations of differential privacy.
+\newblock {\em\protect\JournalTitle{Theoretical Computer Science}} \textbf{9},
+  211--407 (2013).
+
+\bibitem{fioretto:CP-19}
+F Fioretto, P Van~Hentenryck, Differential privacy of hierarchical census data:
+  An optimization approach in {\em Proceedings of the International Conference
+  on Principles and Practice of Constraint Programming {(CP)}}.
+\newblock pp. 639--655 (2019).
+
+\bibitem{Sonnenberg:16}
+W Sonnenberg, Allocating grants for title i (2016).
+
+\bibitem{Census203}
+RVRD Office, Section 203 language determinations (2022).
+
+\bibitem{cohen2021census}
+A Cohen, M Duchin, J Matthews, B Suwal, Census topdown: The impacts of
+  differential privacy on redistricting in {\em 2nd Symposium on Foundations of
+  Responsible Computing (FORC 2021)}.
+\newblock (Schloss Dagstuhl-Leibniz-Zentrum f{\"u}r Informatik), (2021).
+
+\end{thebibliography}

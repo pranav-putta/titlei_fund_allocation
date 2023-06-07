@@ -28,53 +28,33 @@ class Arguments:
 
 
 def compute_epsilons_per_level(rho, weights):
-    # TODO; finish this
-    rhos = rho * np.array(weights) * 1 / 4726
+    rhos = rho * np.array(weights) * 1 / 1426
     epsilons = rhos + 2 * np.sqrt(-rhos * np.log(10 ** -10))
     return epsilons
 
 
-def compute_non_noisy_alloc(df):
-    # total_voting_age_citizens_by_county = df.groupby('S203_GEOID')['VACIT'].sum()
-    # total_limit_english_no_5th_grade_by_county = df.groupby('S203_GEOID')['ILLIT'].sum()
-    # total_limit_english = df.groupby('S203_GEOID')['VACLEP'].sum()
-    total_voting_age_citizens_by_county = df['VACIT']
-    total_limit_english_no_5th_grade_by_county = df['ILLIT']
-    total_limit_english = df['VACLEP']
-    flag5 = (total_limit_english / total_voting_age_citizens_by_county) > 0.05
-    flag10 = total_limit_english > 10000
-    flag_national = (total_limit_english_no_5th_grade_by_county / total_voting_age_citizens_by_county) > 0.0131
+def compute_alloc(df, key_vaclep='VACLEP', key_illit='ILLIT', key_geo_pop='GEO_POP'):
+    leppct = (100 * (df[key_vaclep] / df[key_geo_pop])).round(decimals=1)
+    flag5 = df['pred_flag5'] = leppct >= 5
+    flag10 = df['pred_flag10'] = df[key_vaclep] >= 10000
+    flagedu = df['pred_flagedu'] = (df[key_illit] / df[key_vaclep]).round(decimals=4) >= 0.0131
 
-    coverage = (flag5 | flag10) & flag_national
-    return coverage
-
-
-def compute_allocs(df):
-    total_voting_age_citizens_by_county = df['noisy_vacit']
-    total_limit_english_no_5th_grade_by_county = df['noisy_illit']
-    total_limit_english = df['noisy_vaclep']
-    leppct = total_limit_english / total_voting_age_citizens_by_county
-    flag5 = leppct > 0.05
-    flag10 = total_limit_english > 10000
-    flag_national = (total_limit_english_no_5th_grade_by_county / total_voting_age_citizens_by_county) > 0.0131
-
-    coverage = (flag5 | flag10) & flag_national
-    return leppct, flag5, flag10, flag_national, coverage
+    coverage = (flag5 | flag10) & flagedu
+    return leppct, coverage
 
 
 def compute_noisy_allocs(df, epsilons, _args):
     S = math.sqrt(3)
     # no. of voting age citizens with limited english proficiency AND didn't graduate 5th grade
-    df['noisy_illit'] = df['gt_illit'].apply(lambda x: max(int(dgaussian_fn(S / epsilons[0])(x)), 1))
-
+    df['noisy_illit'] = df['ILLIT'].apply(lambda x: max(int(dgaussian_fn(S / epsilons[0])(x)), 1))
     # no. of voting age citizens
-    df['noisy_vacit'] = df['gt_vacit'].apply(lambda x: max(int(dgaussian_fn(S / epsilons[0])(x)), 1))
-
+    df['noisy_geo_pop'] = df['GEO_POP'].apply(lambda x: max(int(dgaussian_fn(S / epsilons[0])(x)), 1))
     # no. of voting age citizens with limited english proficiency
-    df['noisy_vaclep'] = df['gt_vaclep'].apply(lambda x: max(int(dgaussian_fn(S / epsilons[0])(x)), 1))
-
+    df['noisy_vaclep'] = df['VACLEP'].apply(lambda x: max(int(dgaussian_fn(S / epsilons[0])(x)), 1))
     # set up noisy allocator function
-    return compute_allocs(df)
+    leppct, coverage = compute_alloc(df, key_vaclep='noisy_vaclep', key_illit='noisy_illit',
+                                     key_geo_pop='noisy_geo_pop')
+    return leppct, coverage, df['noisy_illit'], df['noisy_geo_pop'], df['noisy_vaclep']
 
 
 def main():
@@ -84,27 +64,20 @@ def main():
     # load in language data
     with codecs.open('datasets/sect203_Determined_Areas_Only.csv', 'r', encoding='utf-8', errors='ignore') as fdata:
         df = pd.read_csv(fdata)
-        df = df[df['LANGUAGE'] == args.language]
-        df = df.dropna(subset=['VACIT', 'VACLEP', 'ILLIT'])
         df = df[df['LEVEL'] == 'County']
+        df['GEO_POP'] = df.groupby('S203_GEOID')['VACIT'].transform(lambda x: x.iloc[0])
+        df = df.dropna(subset=['VACIT', 'VACLEP'])
 
-    df['pred_illrat'] = df['ILLIT'] / df['VACLEP']
-    df['pred_leppct'] = df['VACLEP'] / df['S203_GEOID'].map(df.groupby('S203_GEOID')['VACIT'].sum())
-
-    df['gt_vaclep'] = df['VACLEP']
-    df['gt_vacit'] = df['VACIT']
-    df['gt_illit'] = df['ILLIT']
-
-    df['gt_coverage'] = compute_non_noisy_alloc(df)
-
+    df['pred_leppct'], df['pred_cov'] = compute_alloc(df)
+    df = df[df['LANGUAGE'] == args.language]
     # compute dp versions
     epsilons = compute_epsilons_per_level(args.global_rho, args.weights)
-
     print(f'epsilons (county, state, national): {epsilons}')
 
     # compute for N trials
     start = time.time()
     avgs = None
+
     f = partial(compute_noisy_allocs, df, epsilons)
     with multiprocessing.Pool(processes=args.num_workers) as pool:
         for results in tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials):
@@ -115,22 +88,19 @@ def main():
     end = time.time()
     print(end - start, 's')
     # take the average of the noisy allocations and update the dataframe
-    leppct, flag5, flag10, flag_national, coverage = avgs
+    leppct, coverage, noisy_illit, noisy_geopop, noisy_vaclep = avgs
     df['noisy_leppct'] = leppct
-    df['noisy_flag5'] = flag5 > 0.5
-    df['noisy_flag10'] = flag10 > 0.5
-    df['noisy_flag_national'] = flag_national > 0.5
+    df['noisy_illit'] = noisy_illit
+    df['noisy_geopop'] = noisy_geopop
+    df['noisy_vaclep'] = noisy_vaclep
     df['noisy_coverage'] = coverage > 0.5
 
     if not os.path.exists('out/'):
         os.makedirs('out/', exist_ok=True)
 
-    file_name = f'out/df_noisy_out_language_dp_rho={args.global_rho}.csv'
+    file_name = f'out/dataL1K/df_noisy_out_language_dp_rho={args.global_rho}.csv'
     print(f'saving to {file_name}')
     df.to_csv(file_name)
-    print('errors: ', np.sum(df['noisy_coverage'] != df['gt_coverage']))
-    print('regular errors: ', np.sum(df['gt_coverage'] != df['FLAG_COV']))
-    print('flag5 errors: ', np.sum(df['noisy_flag5'] != df['FLAG5']))
 
 
 if __name__ == '__main__':

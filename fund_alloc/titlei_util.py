@@ -87,7 +87,7 @@ def solve_hierarchical_counts(national_counts: pd.Series, state_counts: pd.Serie
 @argclass
 class TitleIArguments:
     num_trials: int = field(default=1000)
-    global_rho: float = field(default=0.1)
+    global_rho: float = field(default=2.65)
     weights: List[float] = field(default_factory=lambda: ([0.085, 0.274, 0.02].copy()))
     use_constraints: bool = field(default=True)
     num_workers: int = field(default=4)
@@ -137,7 +137,7 @@ def targeted_grant_weight(eligible, total):
 
 
 def compute_targeted_alloc(formula_pop, total_pop, adj_sppe_, total_funds):
-    weighted_formula_pop = targeted_grant_weight(formula_pop, total_pop)
+    weighted_formula_pop = targeted_grant_weight(np.array(formula_pop), np.array(total_pop))
     eligible_mask = (formula_pop > 10) & ((formula_pop / total_pop) > 0.05)
 
     targeted_authorization_amount = eligible_mask * weighted_formula_pop * adj_sppe_
@@ -205,7 +205,7 @@ def main():
     # real counts
     official_county_formula_population = df['official_children_formula_count']
     official_state_formula_population = official_county_formula_population.groupby('State FIPS Code').sum()
-    official_national_population = official_state_formula_population.sum()
+    official_national_population = float(official_state_formula_population.sum())
     total_pop_count = df['official_children_count']
 
     # calculate with our formula the allocation amounts for each grant
@@ -218,7 +218,8 @@ def main():
                                                      targeted_total_available_funds)
 
     # compute dp versions
-    rhos = args.global_rho * np.array(args.weights) * (1 / 1426)
+    weights = [w * 1 / 1426 for w in args.weights]
+    rhos = args.global_rho * np.array(weights)
     epsilons = rhos + 2 * np.sqrt(-rhos * np.log(10 ** -10))
 
     print(f'epsilons (county, state, national): {epsilons}')
@@ -235,11 +236,13 @@ def main():
     # compute for N trials
     start = time.time()
     avgs = None
-    with multiprocessing.Pool(processes=args.num_workers) as pool:
-        for results in tqdm(pool.imap(f, range(args.num_trials)), total=args.num_trials):
-            if avgs is None:
-                avgs = [pd.Series(np.zeros(len(df)), index=results[i].index) for i in range(len(results))]
-            avgs = [avgs[i] + (results[i] / args.num_trials) for i in range(len(results))]
+    for i in tqdm(range(args.num_trials)):
+        results = f(0)
+        if avgs is None:
+            avgs = [pd.Series(np.zeros(len(df)), index=results[i].index) for i in range(len(results))]
+        avgs = [avgs[i] + results[i] for i in range(len(results))]
+
+    avgs = [avgs[i] / args.num_trials for i in range(len(avgs))]
 
     end = time.time()
     print(end - start, 's')
@@ -257,8 +260,8 @@ def main():
     df['calculated_concentrated_alloc'] = concentration_official_alloc
     df['calculated_targeted_alloc'] = targeted_official_alloc
 
-    if not os.path.exists('out/'):
-        os.makedirs('out/', exist_ok=True)
+    if not os.path.exists('out/data/'):
+        os.makedirs('out/data/', exist_ok=True)
 
     file_name = f'out/df_noisy_out_census_dp_rho={args.global_rho}_use_constraints={args.use_constraints}.csv'
     print(f'saving to {file_name}')

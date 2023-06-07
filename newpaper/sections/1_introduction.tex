@@ -1,0 +1,64 @@
+\section*{Introduction}
+
+Agencies, such as the U.S.~Census Bureau, release data sets and
+statistics about groups of individuals that are then used as inputs to
+a number critical decision processes. For example, the census data is
+used to decide whether a jurisdiction must provide language assistance
+during elections, Title I fund allocation in education \cite{pujol:20}
+and to establish national level COVID-19 vaccination distribution plans
+for states and jurisdictions \cite{covid}.
+The resulting decisions can have significant societal, economic, and medical
+consequences for participating individuals.
+
+In many cases, the released data
+contain sensitive information and their privacy is strictly regulated.
+For example, in the U.S., the census data is regulated under Title 13
+\cite{title13}, which requires that no individual be identified from
+any data release by the Census Bureau. In Europe, data release are
+regulated according to the \emph{General Data Protection Regulation}
+\cite{GDPR}, which addresses the control and transfer of personal data.
+
+Statistical agencies thus release \emph{privacy-preserving} data and
+statistics that conform to privacy and confidentiality requirements.
+In the U.S., a small number of decisions, such as congressional
+apportionment, are taken using unprotected true values, but the vast
+majority of decisions rely on privacy-preserving data. Of particular
+interest are resource allocation decisions relying on the U.S.~Census
+Bureau data, since the bureau will release several privacy-preserving
+data products using the framework of \emph{Differential Privacy} \cite{abowd2018us}
+for their 2020 release.
+
+In particular, in 2020 the Census Bureau implemented a new privacy preserving framework to release privately hierarchical
+statistical data, the Top Down algorithm. The algorithms works by firstly splitting the given privacy budget $\epsilon$ to six
+hierarchical levels (nation, state, county, tract, block, group—block). Then in the second step, a post-processing step
+is applied to make sure the noisy counts are consistent, e.g., the counts should be non-negative.
+However, \cite{pujol:20} empirically showed that differential privacy may have a disparate impact on several resource
+allocation problems. The noise introduced by the privacy mechanism may result in decisions that impact various groups differently.
+Unfortunately, the paper did not provide a deep understanding why this behavior happens and any mitigation to resolve the issue.
+This paper builds on these observations and provides a step towards a deeper understanding of the fairness issues arising when
+differentially private data is used as input to several resource allocation problems.
+	{\em One of its main results
+is to prove that several allotment problems and decision rules with significant societal impact (e.g., the allocation of
+educational funds, the decision to provide minority language assistance on election ballots, or the distribution of
+COVID-19 vaccines) exhibit inherent unfairness when applied to a differentially private release of the census
+data.} To counteract this negative results, the paper examines the conditions under which decision making is fair when
+using differential privacy, and techniques to bound unfairness. The paper also provides a number of mitigation
+approaches to alleviate biases introduced by differential privacy on such decision making problems. More specifically,
+we make the following contributions:
+
+\begin{enumerate}[leftmargin=*,labelsep=2pt,itemsep=0pt,parsep=2pt,topsep=2pt]
+
+	\item We formally defines notions of fairness and bounded fairness for decision making
+	subject to privacy requirements.
+
+	\item We examine the roots of the induced unfairness by analyzing the structure
+	of the decision making problems.
+
+	\item We propose several guidelines to mitigate the negative
+	fairness effects of the decision problems studied.
+\end{enumerate}
+
+To the best of the authors' knowledge, this is the first study that
+attempt at characterizing the relation between differential privacy
+and fairness in decision problems. All proofs are reported in the
+appendix. [Is this still true?]

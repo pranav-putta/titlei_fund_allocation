@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: pnas-new.bst
+White space in argument---line 60 of file main.aux
+ : \citation{Sonnenberg
+ :                      :16}
+I'm skipping whatever remains of this command
+Database file #1: lib.bib
+You've used 11 entries,
+            1916 wiz_defined-function locations,
+            562 strings with 5734 characters,
+and the built_in function-call counts, 2436 in all, are:
+= -- 241
+> -- 91
+< -- 3
++ -- 30
+- -- 19
+* -- 145
+:= -- 326
+add.period$ -- 16
+call.type$ -- 11
+change.case$ -- 11
+chr.to.int$ -- 0
+cite$ -- 11
+duplicate$ -- 140
+empty$ -- 250
+format.name$ -- 19
+if$ -- 590
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 5
+newline$ -- 41
+num.names$ -- 11
+pop$ -- 66
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 87
+stack$ -- 0
+substring$ -- 125
+swap$ -- 49
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 21
+width$ -- 13
+write$ -- 100
+(There was 1 error message)

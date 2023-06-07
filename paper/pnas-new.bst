@@ -3,8 +3,8 @@
 %%%     author          = "Russell Standish"
 %%%  }
 %%% ====================================================================
-% This is "pnas-new.bst", adapted from 
-% "pnas2016.bst", "pnas2011.bst" "pnas2009.bst" and "pnas.bst", 
+% This is "pnas-new.bst", adapted from
+% "pnas2016.bst", "pnas2011.bst" "pnas2009.bst" and "pnas.bst",
 % modified from "unsrt.bst"
 % April 2019: Bold article volume numbers, ignore issue numbers, move publication year to end, abbreviate journal names.
 % August 2021: Issue warning if an @article is missing the volume field.
@@ -43,6 +43,8 @@ ENTRY
     type
     volume
     year
+    url
+    doi
   }
   {}
   { label }
@@ -96,6 +98,28 @@ FUNCTION {output.check}
   if$
 }
 
+FUNCTION {new.block}
+{ output.state before.all =
+    'skip$
+    { after.block 'output.state := }
+  if$
+}
+
+
+FUNCTION {format.url}
+{ url empty$
+    { "" }
+    { new.block "URL \url{" url * "}" * }
+  if$
+}
+
+FUNCTION {format.doi}
+{ doi empty$
+    { "" }
+    { new.block "\doi{" doi * "}" * }
+  if$
+}
+
 FUNCTION {output.bibitem}
 { newline$
   "\bibitem{" write$
@@ -112,12 +136,6 @@ FUNCTION {fin.entry}
   newline$
 }
 
-FUNCTION {new.block}
-{ output.state before.all =
-    'skip$
-    { after.block 'output.state := }
-  if$
-}
 
 FUNCTION {new.sentence}
 { output.state after.block =
@@ -309,6 +327,19 @@ FUNCTION {format.title}
 { title "t" change.case$
 }
 
+FUNCTION {enquote}
+{ duplicate$ empty$
+    {pop$ "" }
+    {"``" swap$ * ",''" * }
+    if$
+}
+
+FUNCTION {format.atitle}
+{ title enquote
+}
+
+
+
 FUNCTION {n.dashify}
 { 't :=
   ""
@@ -470,7 +501,7 @@ FUNCTION {format.vol.num.pages}
   % 'skip$
   { "empty volume in " cite$ * warning$ ""}
   { "\textbf{" volume field.or.null * "}" * }
-  if$ 
+  if$
   pages empty$
   {
     eid empty$
@@ -544,6 +575,20 @@ FUNCTION {format.thesis.type}
   if$
 }
 
+FUNCTION {format.address.thesis}
+    { address empty$
+      { "" }
+      {", " * address }
+      if$
+    }
+
+FUNCTION {format.school.thesis}
+    { school empty$
+      { "" }
+      {", " * school }
+      if$
+    }
+
 FUNCTION {format.tr.number}
 { type empty$
     { "Technical Report" }
@@ -553,6 +598,11 @@ FUNCTION {format.tr.number}
     { "t" change.case$ }
     { number tie.or.space.connect }
   if$
+}
+
+FUNCTION {format.journal}
+{
+  "{\em\protect\JournalTitle{" journal * "}}" *
 }
 
 FUNCTION {format.article.crossref}
@@ -638,10 +688,7 @@ FUNCTION {format.incoll.inproc.crossref}
   " \cite{" * crossref * "}" *
 }
 
-FUNCTION {format.journal}
-{
-  "{\em\protect\JournalTitle{" journal * "}}" *
-}
+
 
 FUNCTION {article}
 { output.bibitem
@@ -827,11 +874,15 @@ FUNCTION {mastersthesis}
 { output.bibitem
   format.authors "author" output.check
   new.sentence
-%  format.date "year" output.check
-  "Master's thesis" format.thesis.type output.nonnull
-  school address comma.connect parenthesize output
-  %new.block
+format.atitle "title" output.check
+  "M.Sc. thesis" format.thesis.type output.nonnull
+  format.school.thesis output
+  format.address.thesis output
   format.date "year" output.check
+  new.block
+  format.doi output
+  format.url output
+  new.block
   note output
   fin.entry
 }
@@ -854,14 +905,19 @@ FUNCTION {phdthesis}
 { output.bibitem
   format.authors "author" output.check
   new.sentence
-%  format.date "year" output.check
-  "Ph.D. thesis" format.thesis.type output.nonnull
-  school address comma.connect parenthesize output
-  %new.block
+format.atitle "title" output.check
+  "PhD thesis" format.thesis.type output.nonnull
+  format.school.thesis output
+  format.address.thesis output
   format.date "year" output.check
+  new.block
+  format.doi output
+  format.url output
+  new.block
   note output
   fin.entry
 }
+
 
 FUNCTION {proceedings}
 { output.bibitem
@@ -1021,3 +1077,4 @@ FUNCTION {end.bib}
 }
 
 EXECUTE {end.bib}
+
